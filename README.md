@@ -7,17 +7,17 @@ Create subclades of tree to identify reticulations (test monophyly of those subd
 Subsample at least one member from each subclade to test for reticulations deeper in the tree
 
 For each subclade and the subsampled backbone:
-Run SnaQ for up to 5 reticulations
-Run NANUQ, look at strucutre with SplitsTree
-Test all reticulation options with MaxQPseudoLikelihood and Goodness of Fit test
-Run HyDe on concatonated gene trees (or SNPs) to see if reticulations are supported
+Run SnaQ for up to 5 reticulations  <br />
+Run NANUQ, look at strucutre with SplitsTree  <br />
+Test all reticulation options with MaxQPseudoLikelihood and Goodness of Fit test  <br />
+Run HyDe on concatonated gene trees (or SNPs) to see if reticulations are supported  <br />
 
 
 
 
 ## Classify quality of dataset, identify possible areas of reticulations
 
-We used [PhyParts] (https://bitbucket.org/blackrim/phyparts) to carry out this analysis. <br />
+We used [PhyParts](https://bitbucket.org/blackrim/phyparts) to carry out this analysis. <br />
 GENETREE is the directory to rooted gene trees <br />
 SPTREE is the rooted species tree file <br />
 out is the outfile <br />
@@ -35,7 +35,7 @@ Gray indicates the proportion of genes that are uninformative, and could be prob
 <img width="468" alt="Screen Shot 2022-10-09 at 9 17 33 PM" src="https://user-images.githubusercontent.com/37371274/194788419-047827dd-346b-4942-b786-21a754138551.png">
 
 ## Create subclades and test monophyly
-We needed to break the tree up into smaller clades so that the network inference programs could handle them. The largest clade had 19 species, 92 indiviudals. We used [DiscoVista] (https://github.com/esayyari/DiscoVista) to analyze if the clades chosen supported monophyly, meaning members in the clades were not jumping into other clades, which could be a sign of reticulation. We wanted each clade we tested to have high support for monophyly.
+We needed to break the tree up into smaller clades so that the network inference programs could handle them. The largest clade had 19 species, 92 indiviudals. We used [DiscoVista](https://github.com/esayyari/DiscoVista) to analyze if the clades chosen supported monophyly, meaning members in the clades were not jumping into other clades, which could be a sign of reticulation. We wanted each clade we tested to have high support for monophyly.
 
 Note: we used the docker install of DV but it can also be run locally. See their github for more information
 
@@ -82,7 +82,9 @@ This script creates the necessary quartet input files for SnaQ and NANUQ
 **SnaQ_run.jl**
 This script runs SnaQ.
 
-It creates several reticulations, whose results for pseudolikelihood and goodness of fit will be out into a results*.csv file. These topologies can then be compared (see Compare the Networks section)
+It creates several reticulations, whose results for pseudolikelihood and goodness of fit will be out into a results*.csv file. These topologies can then be compared (see Compare the Networks section).
+
+Note: you can also run bootstraps in SnaQ as an added support metric for your chosen topology
 
 ## Run NANUQ
 
@@ -100,11 +102,40 @@ The .nex files in NANUQ can be visualized using SplitsTree
 Reticulations can be seen in darting behaviors like those mentioned in the ms for NANUQ (Allman et al., 2019). X-0 is the hybrid and the two Xis on either side are the parent lineages. 
 <img width="888" alt="Screen Shot 2022-10-09 at 11 22 07 PM" src="https://user-images.githubusercontent.com/37371274/194795076-19fe67de-4ad0-447d-badc-07b0672d8510.png">
 
+Using this information, you can convert the network into Extended Newick format for networks and calculate the pseudolikelihood and goodness of fit for these values.
+**How to write newick files**
+
 ## Compare the Networks
 
-##Run HyDe
+Metrics to compare these topologies include the [goodness of fit](https://cecileane.github.io/QuartetNetworkGoodnessFit.jl/dev/man/gof/) and pseudolikelihood in [PhyloNetworks](https://crsl4.github.io/PhyloNetworks.jl/latest/). See how these are calculated in **run_snaq.jl** file
 
-##Build Reticulation_through_Time Plot
+Depending on your question you can remove reticulations with certain genomic contributions (i.e. only looking at introgression of >10%) in PhyloNetworks
+```
+deleteHybridThreshold!(network, 0.1)
+```
+
+Calculate the MaxQ Pseudolikihood for a network/tree which will optimizae the branch lengths/genomic contributions and calculate the pseudolikelihood. 
+```
+topologyMaxQPseudolik!(network, species_level_cf)
+```
+
+Calculate the GoF for a network/tree. This will return a p-value, explaining the propotion of quartets that explain the topology as well as an uncorrected z-score and sigma value.
+```
+quarnetGoFtest!(net1alt, qCF, false; seed=234, nsim=200);
+```
+
+## Run HyDe
+All of the above methods required gene tree estimation to run. To counteract this, we run [HyDe](https://github.com/pblischak/HyDe) which is a site specific hybrid detection software and explore if our hybrids are signifigant. We ran this on all 109 species at once, but it can be done in broke down groups also.
+1. Concatonate all genes together (or better yet: use SNP dataset)
+2. create taxon map 
+3. Run HyDe
+```
+run_hyde.py -i concatonated_phylip.txt -m map.txt -o out -n num_indivs -t num_taxa -s num_sites
+```
+5. Calclulate the proportion of signifigant triplets out of the total triplets
+Look at the triplets involving extant parent lineages (those that arised after hybridization event) and extant hybrid lineages. Caclulate the proportion of these triplets that are signifigant.
+
+## Build Reticulation_through_Time Plot
 
 
 ## References
@@ -113,6 +144,7 @@ DV
 NANUQ
 SnaQ
 GoF
+HyDe
 
 
 ## Citation
