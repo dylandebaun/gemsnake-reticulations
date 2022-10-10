@@ -103,7 +103,6 @@ Reticulations can be seen in darting behaviors like those mentioned in the ms fo
 <img width="888" alt="Screen Shot 2022-10-09 at 11 22 07 PM" src="https://user-images.githubusercontent.com/37371274/194795076-19fe67de-4ad0-447d-badc-07b0672d8510.png">
 
 Using this information, you can convert the network into Extended Newick format for networks and calculate the pseudolikelihood and goodness of fit for these values.
-**How to write newick files**
 
 ## Compare the Networks
 
@@ -132,11 +131,15 @@ All of the above methods required gene tree estimation to run. To counteract thi
 ```
 run_hyde.py -i concatonated_phylip.txt -m map.txt -o out -n num_indivs -t num_taxa -s num_sites
 ```
-5. Calclulate the proportion of signifigant triplets out of the total triplets
+4. Calclulate the proportion of signifigant triplets out of the total triplets
 Look at the triplets involving extant parent lineages (those that arised after hybridization event) and extant hybrid lineages. Caclulate the proportion of these triplets that are signifigant.
 
 ## Build Reticulation_through_Time Plot
 
+**reticulation_through_time.R** builds the reticulation through time plot by transforming it into a bifurcating tree as a proxy. this allows us to use typical lineage through time functions to estimate the rate of accumulation and the best fitting model.
+
+<img width="489" alt="Screen Shot 2022-10-10 at 3 59 27 PM" src="https://user-images.githubusercontent.com/37371274/194943256-e52e6685-d90c-4863-b937-6d9436d8edeb.png">
+<img width="491" alt="Screen Shot 2022-10-10 at 3 59 41 PM" src="https://user-images.githubusercontent.com/37371274/194943285-3c1b85d1-492f-48eb-894d-a00dc85f51ff.png">
 
 ## References
 PhyParts
