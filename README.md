@@ -76,7 +76,13 @@ x_map.csv = mapping of individuals to species (where individuals listed in allel
 allelle, species
 ... ...
 ```
-.R creates the necessary quartet input files for SnaQ and NANUQ
+**prep_SnaQ_NANUQ.R** 
+This script creates the necessary quartet input files for SnaQ and NANUQ
+
+**SnaQ_run.jl**
+This script runs SnaQ.
+
+It creates several reticulations, whose results for pseudolikelihood and goodness of fit will be out into a results*.csv file. These topologies can then be compared (see Compare the Networks section)
 
 ## Run NANUQ
 
@@ -84,13 +90,29 @@ For NANUQ, we will calculate the probabilities that each quartet is a quartet (p
 
 Choice in alpha and beta should be made intentionally, identifying quartet pairs that group together at low values of alpha or high values of beta. This can be difficult to assess when you have many indivduals, so I created a script to concatonate individual information together to look at it at the species level.
 
-x.R :
+**NANUQ.R**
 This script runs NANUQ to calculate the p_T3 and p_star. Using that information, create a file called cladename_alpha.cdv; cladename_beta.csv.
+
+The .nex files in NANUQ can be visualized using SplitsTree
+'Data > Filter Taxa' can be used to remove problematic individuals (for example those with many uninformative genes as mentioned above) and to simplify the results to a species tree.
+<img width="474" alt="Screen Shot 2022-10-09 at 11 20 14 PM" src="https://user-images.githubusercontent.com/37371274/194794970-7cfae374-0021-46cc-b33a-d0fe89543588.png">
+
+Reticulations can be seen in darting behaviors like those mentioned in the ms for NANUQ (Allman et al., 2019). X-0 is the hybrid and the two Xis on either side are the parent lineages. 
+<img width="888" alt="Screen Shot 2022-10-09 at 11 22 07 PM" src="https://user-images.githubusercontent.com/37371274/194795076-19fe67de-4ad0-447d-badc-07b0672d8510.png">
+
+## Compare the Networks
+
+##Run HyDe
+
+##Build Reticulation_through_Time Plot
 
 
 ## References
 PhyParts
 DV
+NANUQ
+SnaQ
+GoF
 
 
 ## Citation
