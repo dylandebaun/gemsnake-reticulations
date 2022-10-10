@@ -79,12 +79,12 @@ allelle, species
 **prep_SnaQ_NANUQ.R** 
 This script creates the necessary quartet input files for SnaQ and NANUQ
 
-**SnaQ_run.jl**
+**run_SnaQ.jl**
 This script runs SnaQ.
 
 It creates several reticulations, whose results for pseudolikelihood and goodness of fit will be out into a results*.csv file. These topologies can then be compared (see Compare the Networks section).
 
-Note: you can also run bootstraps in SnaQ as an added support metric for your chosen topology, some code for this is also in **SnaQ_run.jl**
+Note: you can also run bootstraps in SnaQ as an added support metric for your chosen topology, some code for this is also in **run_SnaQ.jl**
 
 ## Run NANUQ
 
