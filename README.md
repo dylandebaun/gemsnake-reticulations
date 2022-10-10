@@ -39,7 +39,13 @@ We needed to break the tree up into smaller clades so that the network inference
 
 Note: we used the docker install of DV but it can also be run locally. See their github for more information
 
-First, create a clade definition file so you know which members belong to each clade. This function will contribute the simple tab file (species \t clade_name) into the definition file:
+First, create a clade definition file so you know which members belong to each clade. This function will contribute the simple tab file (species \t clade_name) into the definition file.
+cladeannotation.txt
+```
+sp1, clade1
+sp2, clade1
+... ...
+```
 
 ```
 docker run -v ${DV_directory}:/data esayyari/discovista generate_clade-defs.py parameters/cladeannotation_${testname}.txt parameters/clade-defs_${testname}.txt
@@ -62,9 +68,24 @@ If no grouping metric seems to decrease the proportion of red and yellow, you ma
 We will be running SnaQ on a bifurcating tree to identify 1 to (say about) 5 reticulations. 
 We need to create all the prep files for a subclade: a file of concordance factors for 
 
-x_individuals.txt = list of individuals in clade
-x_species.txt = list of species in clade
+To create for each clade--
+x_individuals.txt = list of individuals in clade <br />
+x_species.txt = list of species in clade <br />
+x_map.csv = mapping of individuals to species (where individuals listed in allele column) <br />
+```
+allelle, species
+... ...
+```
+.R creates the necessary quartet input files for SnaQ and NANUQ
 
+## Run NANUQ
+
+For NANUQ, we will calculate the probabilities that each quartet is a quartet (p_T3) or a star (p_star). you will need to choose your own threshold values for each of thes (alpha for p_T3 and beta for p_star). 
+
+Choice in alpha and beta should be made intentionally, identifying quartet pairs that group together at low values of alpha or high values of beta. This can be difficult to assess when you have many indivduals, so I created a script to concatonate individual information together to look at it at the species level.
+
+x.R :
+This script runs NANUQ to calculate the p_T3 and p_star. Using that information, create a file called cladename_alpha.cdv; cladename_beta.csv.
 
 
 ## References
