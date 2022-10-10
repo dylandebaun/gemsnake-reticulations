@@ -84,7 +84,7 @@ This script runs SnaQ.
 
 It creates several reticulations, whose results for pseudolikelihood and goodness of fit will be out into a results*.csv file. These topologies can then be compared (see Compare the Networks section).
 
-Note: you can also run bootstraps in SnaQ as an added support metric for your chosen topology
+Note: you can also run bootstraps in SnaQ as an added support metric for your chosen topology, some code for this is also in **SnaQ_run.jl**
 
 ## Run NANUQ
 
