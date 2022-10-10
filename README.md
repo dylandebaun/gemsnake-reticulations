@@ -1,12 +1,12 @@
 # gemsnake-reticulations
 The following procedure was created in DeBaun et al., 2022 to comprehensively explore the network structure and trends for the evolutionary history of Malagasy gemsnakes.
 
-Classify the quality of the gene tree dataset
-Create subclades of tree to identify reticulations (test monophyly of those subdivisions)
-  Based on the results of this test, remove taxa or gene trees that are uninformative
-Subsample at least one member from each subclade to test for reticulations deeper in the tree
+Classify the quality of the gene tree dataset  <br />
+Create subclades of tree to identify reticulations (test monophyly of those subdivisions)  <br />
+  Based on the results of this test, remove taxa or gene trees that are uninformative <br /> 
+Subsample at least one member from each subclade to test for reticulations deeper in the tree <br />
 
-For each subclade and the subsampled backbone:
+For each subclade and the subsampled backbone: <br />
 Run SnaQ for up to 5 reticulations  <br />
 Run NANUQ, look at strucutre with SplitsTree  <br />
 Test all reticulation options with MaxQPseudoLikelihood and Goodness of Fit test  <br />
