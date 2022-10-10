@@ -59,9 +59,15 @@ If no grouping metric seems to decrease the proportion of red and yellow, you ma
 ### You now have the set of clades you will be working with. You should additionally test the backbone of the tree for reticulations. We did this by sampling one or two members from each subclade and running the network analysis on those members.
 
 ## Run SnaQ
+We will be running SnaQ on a bifurcating tree to identify 1 to (say about) 5 reticulations. 
+We need to create all the prep files for a subclade: a file of concordance factors for 
+
+x_individuals.txt = list of individuals in clade
+x_species.txt = list of species in clade
 
 
-##References
+
+## References
 PhyParts
 DV
 
