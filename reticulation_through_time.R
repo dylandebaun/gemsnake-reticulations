@@ -3,6 +3,7 @@
 library(ape)
 library(phytools)
 library(ggplot2)
+library(stringi)
 
 #Create a phylogentic tree representing the Reticulations through time so that we can use already established ltt analysis tools.
 
