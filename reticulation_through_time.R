@@ -3,57 +3,40 @@
 library(ape)
 library(phytools)
 library(ggplot2)
+tree<-read.tree()
+tree1<-force.ultrametric(tree)
+tree1<-drop.tip(tree1,c(1:14,124:130))
+x<-ltt(tree1,log.lineages = F)
 
-#Create a phylogentic tree representing the Reticulations through time so that we can use already established ltt analysis tools.
+bt<-branching.times(tree1)
 
-rtt <- read.table() #create a data file where the first column is timing of reticulation in order 
+ltt1 <- as.data.frame(cbind(x[["times"]]-22.17059,log(x[["ltt"]])))
+ltt15 <- format(ltt1[-c(1:11),],scientific=F)
+rtt <- read.csv("~/Desktop/rtt1.csv")
+ltt15[1,] = as.numeric(c(-14.71835,2.639057))
+ltt15[97,1] = as.numeric(0)
+rtt[13,] = as.numeric(c(0,109,12,0,0,0))
 
-namertt <- stri_rand_strings(dim(rtt)[1], 3, pattern = "[A-Z]") #assign arbitrary names for creating the newick file
+#GEOM STEP Plot 
+p <- ggplot()+geom_step(aes(x=as.numeric(ltt15[,1]), y = as.numeric(ltt15[,2])-as.numeric(min(ltt15[,2]))), size= 1.5,direction="vh")+  geom_step(aes(x=-rtt$year..my.,y=log(rtt$num_retic)),color="dark blue",size=1.5,direction="hv")+ scale_y_continuous(name="ln(Number of Lineages)",breaks = seq(0,2.5,0.5), labels = seq(2.56,5.06,0.5),sec.axis = sec_axis(trans=~.*1, name="ln(Number of Reticulations)"))
+p
+#p <- ggplot() + geom_point(aes(x=rtt$year.my.,y=rtt$log.num.),color="dark blue",size=2) +scale_x_continuous(breaks = seq(-15,0,5),name = "Time (mya)")              
+p <- p + geom_vline(xintercept=-2.588) + geom_vline(xintercept=-5.332)+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                                                              panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size=14),panel.border = element_rect(colour = "black", fill=NA, size=0.5))
+p
+p<- p +  geom_errorbarh(data = rtt, aes(xmin=-positive,xmax = -negative, y= log(num_retic)), alpha=0.4,linetype = "dashed",color="dark blue") +theme(legend.position = "none")  +xlab("Time (mya)") +scale_x_continuous(limits=c(-max(rtt$positive),0), expand = c(0.01, 0.02)) 
+p
+pdf("~/Desktop/Figure_LTTRTTLOGSCALE_VH.pdf",height = 10, width = 12)
+plot(p)
+dev.off()
 
-newick = paste0("(",namertt[1],":",abs(rtt[1,1]),", ~:",abs(rtt[1,1]),")")
-for(i in 2:dim(rtt)[1]){
-  next1 = paste0("(",namertt[i],":",abs(rtt[i,1]),", ~:",abs(rtt[i,1]),")")
-  newick = gsub("~", next1,newick)
-}
-newick = gsub("~", "Z",newick)
-newick = paste0(newick,";") #creates the newick text
-
-newtree = read.tree(text = newick) #reads that in as a tree
-t <- force.ultrametric(newtree) #extend the tips to extant 
-ltt(t,plot=T, log.lineages = T) #create the reticulation through time plot
-
-#simulate RTTs under pure birth model (http://phytools.org/mexico2018/ex/10/Diversification-models.html)
-trees<-pbtree(b=b,n=Ntip(t),t=h,nsim=100,method="direct",
-              quiet=TRUE)
-obj<-ltt(trees,plot=FALSE)
-plot(obj,col="grey",main="LTT compared to simulated LTTs")
-lines(c(0,h),log(c(2,Ntip(t))),lty="dashed",lwd=2,col="red")
-ltt(t,add=TRUE,lwd=2)
-
-#plot the 95th confidence envelope for those birth rtts and overlay the true rtt
-ltt95(trees,log=TRUE)
-title(main="RTT compared to simulated RTTs")
-ltt(t,add=TRUE,log.lineages=FALSE,col="red",lwd=2)
-ninetyfive <-ltt95(trees,log=TRUE)
-
-#Find rates for the rtt under two different models (birth and birth death): https://lukejharmon.github.io/ilhabela/instruction/2015/06/02/diversification/
-library(diversitree)
-# first fit a Yule model
-pbModel <- make.yule(t)
-pbMLFit <- find.mle(pbModel, 0.1)
-
-# next fit a Birth-death model
-bdModel <- make.bd(t)
-bdMLFit <- find.mle(bdModel, c(0.1, 0.05), method = "optim", lower = 0)
-
-# compare models
-anova(bdMLFit, pure.birth = pbMLFit)
-
-#run mcmc on the better fit model to come up with a distribution of values for the parameter estimation
-bSamples <- mcmc(pbModel, pbMLFit$par, nsteps = 1e+05, lower = c(0), upper = c(Inf), w = c(0.1), fail.value = -Inf, print.every = 10000)
-postSamples <- bSamples[c("lambda")]
-profiles.plot(postSamples, col.line = c("red"), las = 1, legend = "topright")
-#get the mean parameter estimates
-mean(postSamples$lambda)
-
-
+#supplement figure
+p <- ggplot()+  geom_step(aes(x=-rtt$year..my.,y=log(rtt$num_retic)),color="dark blue",size=1.5,direction="hv")+ scale_y_continuous(name="ln(Number of Lineages)",breaks = seq(0,2.5,0.5), labels = seq(2.56,5.06,0.5),sec.axis = sec_axis(trans=~.*1, name="ln(Number of Reticulations)"))
+p <- p +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                                                              panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size=14),panel.border = element_rect(colour = "black", fill=NA, size=0.5))
+p<- p +  geom_errorbarh(data = rtt, aes(xmin=-positive,xmax = -negative, y= log(num_retic)), alpha=0.4,linetype = "dashed",color="dark blue") +theme(legend.position = "none")  +xlab("Time (mya)") +scale_x_continuous(limits=c(-max(rtt$positive),0), expand = c(0.01, 0.02)) 
+p
+p + geom_line(aes(x=c(-rtt$year..my.[1],0),y=c(log(1),log(12))),col="red")
+#calculation for the rate
+log(12)/rtt$year..my.[1]
+#0.1688305
