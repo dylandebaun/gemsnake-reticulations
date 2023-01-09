@@ -143,10 +143,15 @@ Look at the triplets involving extant parent lineages (those that arised after h
 
 ## References
 PhyParts - https://bitbucket.org/blackrim/phyparts
+
 DV - https://github.com/esayyari/DiscoVista
-NANUQ - Allman, E. S., Baños, H., & Rhodes, J. A. (2019). NANUQ: a method for inferring species networks from gene trees under the coalescent model. Algorithms for Molecular Biology, 14(1), 1-25.
+
+NANUQ - [Allman, E. S., Baños, H., & Rhodes, J. A. (2019). NANUQ: a method for inferring species networks from gene trees under the coalescent model. Algorithms for Molecular Biology, 14(1), 1-25.](https://cran.r-project.org/web/packages/MSCquartets/MSCquartets.pdf)
+
 SnaQ - https://crsl4.github.io/PhyloNetworks.jl/latest/
+
 GoF - https://cecileane.github.io/QuartetNetworkGoodnessFit.jl/dev/
+
 HyDe - https://github.com/pblischak/HyDe
 
 
