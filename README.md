@@ -136,20 +136,24 @@ Look at the triplets involving extant parent lineages (those that arised after h
 
 ## Build Reticulation_through_Time Plot
 
-**reticulation_through_time.R** builds the reticulation through time plot by transforming it into a bifurcating tree as a proxy. this allows us to use typical lineage through time functions to estimate the rate of accumulation and the best fitting model.
+**reticulation_through_time.R** builds the reticulation through time plot. the rate of accumulation was calculated as the slope of the line connecting these points 
 
-<img width="489" alt="Screen Shot 2022-10-10 at 3 59 27 PM" src="https://user-images.githubusercontent.com/37371274/194943256-e52e6685-d90c-4863-b937-6d9436d8edeb.png">
-<img width="491" alt="Screen Shot 2022-10-10 at 3 59 41 PM" src="https://user-images.githubusercontent.com/37371274/194943285-3c1b85d1-492f-48eb-894d-a00dc85f51ff.png">
+<img width="321" alt="image" src="https://user-images.githubusercontent.com/37371274/211403111-2a107ba1-51a5-410e-8664-2172820cf343.png">
+
 
 ## References
-PhyParts
-DV
-NANUQ
-SnaQ
-GoF
-HyDe
+PhyParts - https://bitbucket.org/blackrim/phyparts
+
+DV - https://github.com/esayyari/DiscoVista
+
+NANUQ - [Allman, E. S., Baños, H., & Rhodes, J. A. (2019). NANUQ: a method for inferring species networks from gene trees under the coalescent model. Algorithms for Molecular Biology, 14(1), 1-25.](https://cran.r-project.org/web/packages/MSCquartets/MSCquartets.pdf)
+
+SnaQ - https://crsl4.github.io/PhyloNetworks.jl/latest/
+
+GoF - https://cecileane.github.io/QuartetNetworkGoodnessFit.jl/dev/
+
+HyDe - https://github.com/pblischak/HyDe
 
 
 ## Citation
-DeBaun et al., 2022. Widespread Reticulate Evolution in an Adaptive Radiation. Evolution. *in revision*
-
+DeBaun et al., 2022. Widespread Reticulate Evolution in an Adaptive Radiation. Evolution. *accepted*
