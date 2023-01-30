@@ -156,4 +156,4 @@ HyDe - https://github.com/pblischak/HyDe
 
 
 ## Citation
-DeBaun et al., 2022. Widespread Reticulate Evolution in an Adaptive Radiation. Evolution. *accepted*
+DeBaun, D., Rabibisoa, N., Raselimanana, A. P., Raxworthy, C. J., & Burbrink, F. T. (2023). Widespread Reticulate Evolution in an Adaptive Radiation. Evolution, qpad011.
